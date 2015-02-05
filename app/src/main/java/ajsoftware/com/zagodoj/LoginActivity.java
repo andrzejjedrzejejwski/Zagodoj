@@ -1,21 +1,34 @@
 package ajsoftware.com.zagodoj;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
 public class LoginActivity extends ActionBarActivity {
 
+    protected EditText mUserName;
+    protected  EditText mPassword;
+    protected Button mLoginButton;
 
     protected TextView mSignUpTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -27,7 +40,59 @@ public class LoginActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        mUserName = (EditText) findViewById(R.id.usernameField);
+        mPassword = (EditText) findViewById(R.id.passwordField);
+        mLoginButton = (Button) findViewById(R.id.loginButton);
+
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signUp();
+            }
+        });
     }
+
+    private void signUp() {
+        String username = mUserName.getText().toString();
+        String password = mPassword.getText().toString();
+
+        username = username.trim();
+        password = password.trim();
+
+        if (username.isEmpty() || password.isEmpty()){
+            showDialog(getString(R.string.login_error_message), getString(R.string.login_error_title));
+        }else{
+            //Login the new user
+
+            ParseUser.logInInBackground(username, password, new LogInCallback() {
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
+
+                    if(e == null){
+                        //Login Correct!!!
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+
+                    }else{
+                        showDialog(e.getMessage(), getString(R.string.login_error_title));
+                    }
+                }
+            });
+        }
+    }
+
+    private void showDialog(String message, String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setTitle(title);
+        builder.setPositiveButton(android.R.string.ok, null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
 
     @Override
