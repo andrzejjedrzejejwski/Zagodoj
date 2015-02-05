@@ -6,4 +6,12 @@
           android:title="@string/action_settings"
           android:orderInCategory="100"
           app:showAsAction="never"/>
+    <item android:id="@+id/logout"
+          android:title="@string/logout_label"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
+    <item android:id="@+id/editFriend"
+          android:title="@string/edit_friend_lable"
+          android:orderInCategory="100"
+          app:showAsAction="never"/>
 </menu>

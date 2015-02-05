@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login_button"
-        android:id="@+id/button"
+        android:id="@+id/loginButton"
         android:layout_below="@+id/passwordField"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:text="@string/signup_button"
         android:id="@+id/signupTextView"
-        android:layout_below="@+id/button"
+        android:layout_below="@+id/loginButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="117dp"/>
 
