@@ -26,5 +26,13 @@
     <string name="edit_firen_error_title">We\'re sorry!</string>
     <string name="edit_friend_lable">Edit friends</string>
     <string name="friends_list_error">Soory there is a problem with downloading yout friends list!</string>
+    <string name="title_activity_user_details">UserDetailsActivity</string>
+    <string name="menu_camera_label">Camera</string>
+    <string-array name="camera_choices">
+        <item>Take Picture</item>
+        <item>Take Video</item>
+        <item>Choose Picture</item>
+        <item>Choose Video</item>
+    </string-array>
 
 </resources>

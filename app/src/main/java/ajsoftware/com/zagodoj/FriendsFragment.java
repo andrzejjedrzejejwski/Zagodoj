@@ -1,6 +1,7 @@
 package ajsoftware.com.zagodoj;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -8,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -75,5 +79,16 @@ public class FriendsFragment extends ListFragment {
         builder.setPositiveButton(android.R.string.ok, null);
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        String name = l.getItemAtPosition(position).toString();
+        Intent intent = new Intent(l.getContext(), UserDetailsActivity.class);
+        intent.putExtra("position", name);
+        startActivity(intent);
+
+
     }
 }

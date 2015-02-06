@@ -1,5 +1,7 @@
 package ajsoftware.com.zagodoj;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,6 +20,22 @@ import com.parse.ParseUser;
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     public static  final String TAG = MainActivity.class.getSimpleName();
+
+    protected DialogInterface.OnClickListener mDialogListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case 0: //Take picture
+                        break;
+                    case 1: //Take Video
+                        break;
+                    case 2: //Choose picture
+                        break;
+                    case 3: //Choose video
+                        break;
+                }
+        }
+    };
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -107,6 +125,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
             ParseUser.logOut();
@@ -114,6 +134,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }else if (id == R.id.editFriend){
             Intent intent = new Intent(this, EditFriendActivity.class);
             startActivity(intent);
+        }else if (id == R.id.action_camera){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setItems(R.array.camera_choices, mDialogListener);
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
 
         return super.onOptionsItemSelected(item);
