@@ -28,11 +28,23 @@
     <string name="friends_list_error">Soory there is a problem with downloading yout friends list!</string>
     <string name="title_activity_user_details">UserDetailsActivity</string>
     <string name="menu_camera_label">Camera</string>
+    <string name="error_external_storage">There was a problem accessing yoy device\'s external storage.</string>
+    <string name="error_on_activity_result">Sorry, there was an error1</string>
+    <string name="error_getting_photo">There was an error during getting a photo!</string>
+    <string name="warning_10MB">The selected video must be less than 10 MB!</string>
+    <string name="error_getting_video">There was an error during file opening!</string>
+    <string name="file_size_too_large">Chosen file is to large! There is 10 MB limit!</string>
+
     <string-array name="camera_choices">
         <item>Take Picture</item>
         <item>Take Video</item>
         <item>Choose Picture</item>
         <item>Choose Video</item>
     </string-array>
+
+    <string name="title_activity_receipients">Choose Receipients</string>
+    <string name="empty_recipients_list_message">The list is empty!</string>
+    <string name="menu_send_label">SEND</string>
+    <string name="title_activity_receipients_activity2">ReceipientsActivity2</string>
 
 </resources>

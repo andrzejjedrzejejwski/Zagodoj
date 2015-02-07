@@ -1,17 +1,15 @@
 package ajsoftware.com.zagodoj;
 
 import android.app.AlertDialog;
-import android.content.Intent;
+import android.app.ListActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -21,22 +19,25 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-/**
- * Created by andrzejj on 05.02.15.
- */
-public class FriendsFragment extends ListFragment {
-    public static final String TAG = FriendsFragment.class.getSimpleName();
+
+public class ReceipientsActivity extends ListActivity {
+    protected static final String TAG = ReceipientsActivity.class.getSimpleName();
 
     protected List<ParseUser> mFriends;
     protected ParseRelation<ParseUser> mFriendsRelation;
     protected ParseUser mCurrentUser;
 
+    protected MenuItem mSendMenuItem;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_receipients);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //setupActionBar();
+        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        return rootView;
     }
 
     @Override
@@ -60,8 +61,8 @@ public class FriendsFragment extends ListFragment {
                         usernames[i] = friend.getUsername();
                         i++;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(),
-                            android.R.layout.simple_list_item_1, usernames);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(ReceipientsActivity.this,
+                            android.R.layout.simple_list_item_checked, usernames);
                     setListAdapter(adapter);
 
                 }else{
@@ -72,8 +73,39 @@ public class FriendsFragment extends ListFragment {
         });
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_receipients, menu);
+        mSendMenuItem = menu.getItem(0);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        mSendMenuItem.setVisible(true);
+    }
+
     private void showDialog(String message, String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getListView().getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReceipientsActivity.this);
         builder.setMessage(message);
         builder.setTitle(title);
         builder.setPositiveButton(android.R.string.ok, null);
@@ -81,14 +113,4 @@ public class FriendsFragment extends ListFragment {
         dialog.show();
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        String name = l.getItemAtPosition(position).toString();
-        Intent intent = new Intent(l.getContext(), UserDetailsActivity.class);
-        intent.putExtra("position", name);
-        startActivity(intent);
-
-
-    }
 }
